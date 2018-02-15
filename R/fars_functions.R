@@ -10,8 +10,8 @@
 #' @return A data frame constructed from the contents of the CSV file passed.
 #'
 #' @examples
-#' farsread(filename = "accident_2013.csv")
-#' farsread(filename = "accident_2014.csv")
+#' \dontrun{farsread(filename = "accident_2013.csv")}
+#' \dontrun{farsread(filename = "accident_2014.csv")}
 #'
 #'
 #' @export
@@ -37,8 +37,8 @@ fars_read <- function(filename) {
 #' @return This function returns a filename for the given year's compressed dataset.
 #'
 #' @examples
-#' makefilename(2014)
-#' makefilename(2013)
+#' make_filename(2014)
+#' make_filename(2013)
 #'
 #' @export
 make_filename <- function(year) {
@@ -60,8 +60,8 @@ make_filename <- function(year) {
 #'      in the specified years.
 #'
 #' @examples
-#' fars_read_years(2014)
-#' fars_read_years(c(2014,2015,2016)
+#' \dontrun{fars_read_years(2014)}
+#' \dontrun{fars_read_years(c(2014,2015,2016)}
 #'
 #' @importFrom dplyr %>%
 #'
@@ -94,8 +94,8 @@ fars_read_years <- function(years) {
 #' @return This function returns a data frame with years as columns and month numbers as row numbers.
 #'
 #' @examples
-#' fars_summarize_years(2014)
-#' fars_summarize_years(c(2014,2015,2016)
+#' \dontrun{fars_summarize_years(2014)}
+#' \dontrun{fars_summarize_years(c(2014,2015,2016)}
 #'
 #' @importFrom dplyr %>%
 #'
@@ -125,11 +125,9 @@ fars_summarize_years <- function(years) {
 #' @return Returns a null value, but generates a plot.
 #'
 #' @examples
-#' fars_map_state(36,2013)
-#' fars_map_state(34,2014)
-#' fars_map_state(34,2014)
-#'
-#' @importFrom maps map
+#' \dontrun{fars_map_state(36,2013)}
+#' \dontrun{fars_map_state(34,2014)}
+#' \dontrun{fars_map_state(34,2014)}
 #'
 #' @export
 fars_map_state <- function(state.num, year) {

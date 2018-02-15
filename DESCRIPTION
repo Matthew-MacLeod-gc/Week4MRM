@@ -2,6 +2,8 @@ Package: Week4MRM
 Type: Package
 Title: Reading and Plotting FARS Accident Data
 Version: 1.0.0
+Date: 2018-02-15
+Imports: dplyr, maps, readr, tidyr
 Author: Matthew R. MacLeod
 Maintainer: Matthew R. MacLeod <mmacleod@ieee.org>
 Description: Provides functions for working with files downloaded from the
@@ -13,3 +15,4 @@ LazyData: true
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
+RoxygenNote: 6.0.1
