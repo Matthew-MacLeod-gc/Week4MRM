@@ -4,7 +4,7 @@ author: "Matthew R. MacLeod"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Examples of working with the FARS data using Week4MRM}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,50 +16,45 @@ knitr::opts_chunk$set(
 )
 ```
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+The Week4MRM pacakge provides functions for working with files downloaded from the Fatality Analysis Reporting System (FARS) at https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars, allowing data to be summarized and plotted on a map.
 
-## Vignette Info
+This package relies on the existence of files with names of the form 
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+```{r eval=FALSE}
+accident_NNNN.csv
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+or
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+```{r eval=FALSE}
+accident_NNNN.csv.bz2
 ```
 
-Also a quote using `>`:
+Where **NNNN** is a year.  
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+
+Other than suppporting utility functions, the most basic funciton of use to the user is to read in one or more years worth of data to a, using the following syntax:
+
+```{r eval=FALSE}
+fars_read_years(2014)
+fars_read_years(c(2014,2015,2016))
+```
+
+
+More useful is a function which creates a table of the month and year of each incident in the FARS database
+for one or more specified years, then computes and returns a summary table of the number of incidents
+with the months in rows and years in columns:
+
+```{r eval=FALSE}
+fars_summarize_years(2014)
+fars_summarize_years(c(2014,2015,2016)
+```
+
+Finally, there is a function which plots the locations of FARS incidents in a given state in a given year. States are nubmered in alphabetical order (see p. 50 of the guide at the following link: https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/812449), including District of Columbia, Peurto Rico and Virgin Islands, as entries, but skipping the numbers 3, 7 and 14.  Example invocations are as follows:
+
+```{r eval=FALSE}
+fars_map_state(36,2013)
+fars_map_state(34,2014)
+fars_map_state(34,2014)
+```
