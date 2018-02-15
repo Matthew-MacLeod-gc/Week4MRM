@@ -6,13 +6,13 @@
 #'
 #'
 #' @param filename The name of the CSV file to be opened.
-#' 
+#'
 #' @return A data frame constructed from the contents of the CSV file passed.
 #'
 #' @examples
 #' farsread(filename = "accident_2013.csv")
 #' farsread(filename = "accident_2014.csv")
-#' 
+#'
 #'
 #' @export
 fars_read <- function(filename) {
@@ -29,11 +29,11 @@ fars_read <- function(filename) {
 #'
 #' This function creates a standard filename for the FARS dataset from
 #' \url{https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars}
-#' given a year.  
+#' given a year.
 #'
 #'
 #' @param year The year of the data of interest.
-#' 
+#'
 #' @return This function returns a filename for the given year's compressed dataset.
 #'
 #' @examples
@@ -55,14 +55,14 @@ make_filename <- function(year) {
 #'
 #'
 #' @param years The year(s) of the data of interest in a vector or list.
-#' 
+#'
 #' @return This function returns a data frame with two columns, MONTH and year, with a row for each FARS incident
 #'      in the specified years.
 #'
 #' @examples
 #' fars_read_years(2014)
 #' fars_read_years(c(2014,2015,2016)
-#' 
+#'
 #' @importFrom dplyr %>%
 #'
 #' @export
@@ -71,7 +71,7 @@ fars_read_years <- function(years) {
                 file <- make_filename(year)
                 tryCatch({
                         dat <- fars_read(file)
-                        dplyr::mutate(dat, year = year) %>% 
+                        dplyr::mutate(dat, year = year) %>%
                                 dplyr::select(MONTH, year)
                 }, error = function(e) {
                         warning("invalid year: ", year)
@@ -90,20 +90,20 @@ fars_read_years <- function(years) {
 #'
 #'
 #' @param years The year(s) of the data of interest in a vector or list.
-#' 
+#'
 #' @return This function returns a data frame with years as columns and month numbers as row numbers.
 #'
 #' @examples
 #' fars_summarize_years(2014)
 #' fars_summarize_years(c(2014,2015,2016)
-#' 
+#'
 #' @importFrom dplyr %>%
 #'
 #' @export
 fars_summarize_years <- function(years) {
         dat_list <- fars_read_years(years)
-        dplyr::bind_rows(dat_list) %>% 
-                dplyr::group_by(year, MONTH) %>% 
+        dplyr::bind_rows(dat_list) %>%
+                dplyr::group_by(year, MONTH) %>%
                 dplyr::summarize(n = n()) %>%
                 tidyr::spread(year, n)
 }
@@ -113,7 +113,7 @@ fars_summarize_years <- function(years) {
 #'
 #' This function loads the FARS data for the give year, and selects all
 #' the incidents in the given state number.  States are nubmered in alphabetical order
-#' (see \href{https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/812449}{2016 FARS / CRSS Coding and Validation Manual}, 
+#' (see \href{https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/812449}{2016 FARS / CRSS Coding and Validation Manual},
 #' p.50), including District of Columbia, Peurto Rico and Virgin Islands, as entries, but skipping the numbers 3, 7 and 14.
 #' Will generate an error if an invalid state number is given, or if there are no incidents in the
 #' specified state in the specified year.
@@ -121,14 +121,15 @@ fars_summarize_years <- function(years) {
 #'
 #' @param year The year of the data of interest.
 #' @param state.num The number of the state of equivalent ot be plotted.
-#' 
+#'
 #' @return Returns a null value, but generates a plot.
 #'
 #' @examples
 #' fars_map_state(36,2013)
 #' fars_map_state(34,2014)
 #' fars_map_state(34,2014)
-#' 
+#'
+#' @importFrom maps map
 #'
 #' @export
 fars_map_state <- function(state.num, year) {
