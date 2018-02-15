@@ -3,7 +3,7 @@ Type: Package
 Title: Reading and Plotting FARS Accident Data
 Version: 1.0.0
 Date: 2018-02-15
-Imports: dplyr, maps, readr, tidyr
+Imports: dplyr, maps, readr, tidyr, testthat
 Author: Matthew R. MacLeod
 Maintainer: Matthew R. MacLeod <mmacleod@ieee.org>
 Description: Provides functions for working with files downloaded from the
